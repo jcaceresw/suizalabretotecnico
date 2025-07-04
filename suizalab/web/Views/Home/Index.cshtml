@@ -1,4 +1,4 @@
-﻿@model IEnumerable<OrdenesDTO>
+﻿@model IEnumerable<OrdenesResponse>
 
 @{
 	ViewBag.Title = "Ordenes";
@@ -44,8 +44,8 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (OrdenesDTO orden in Model)
-			{
+		@* 	@foreach (OrdenesResponse orden in Model)
+			{ *@
 				@* <tr>
 					<td>@orden.PersonName</td>
 					<td>@orden.Email</td>
@@ -56,7 +56,7 @@
 					<td>@orden.Address</td>
 					<td>@orden.ReceiceNewsLetters</td>
 				</tr> *@
-			}
+		@* 	} *@
 		</tbody>
 	</table>
 </form>

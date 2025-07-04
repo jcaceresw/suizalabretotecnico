@@ -361,3 +361,8 @@ a.link-hover:hover {
 		width: auto;
 	}
 }
+
+h3 {
+	text-align: center;
+	margin: 0.5em;
+}

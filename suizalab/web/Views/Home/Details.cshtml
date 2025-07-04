@@ -1,0 +1,46 @@
+﻿@model OrdenesResponse
+
+@{
+	ViewBag.Title = "Detalle de Orden";
+}
+
+<h3>Orden</h3>
+<table class="table">
+	<thead>
+		<tr>
+			<th>Cliente</th>
+			<th>Fecha de Creación</th>
+			<th>Total</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>@Model.Cliente</td>
+			<td>@Model.FechaCreacion.ToString("dd MMM yyyy")</td>
+			<td>@Model.Total</td>
+		</tr>
+	</tbody>
+</table>
+
+<h3>Detalle</h3>
+<table class="table">
+	<thead>
+		<tr>
+			<th>Producto</th>
+			<th>Cantidad</th>
+			<th>Precio Unitario</th>
+			<th>Subtotal</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (OrdenDetallesResponse detalle in Model.Detalles)
+		{
+			<tr>
+				<td>@detalle.Producto</td>
+				<td>@detalle.Cantidad</td>
+				<td>@detalle.PrecioUnitario</td>
+				<td>@detalle.Subtotal</td>
+			</tr>
+		}
+	</tbody>
+</table>

@@ -8,25 +8,25 @@ namespace contracts
 		/// Crea una nueva orden con sus detalles
 		/// </summary>
 		/// <param name="orden">Orden y sus detalles a crear</param>
-		void Crear(OrdenesDTO orden);
+		int Crear(OrdenesRequest orden);
 
 		/// <summary>
 		/// Actualiza la orden y sus detalles
 		/// </summary>
 		/// <param name="orden">Orden y sus detalles a actualizar</param>
-		void Actualizar(OrdenesDTO orden);
+		int Actualizar(OrdenesRequest orden);
 
 		/// <summary>
 		/// Elimina una orden y sus detalles
 		/// </summary>
 		/// <param name="id">ID de la orden a eliminar</param>
-		void Eliminar(int id);
+		int Eliminar(int id);
 
 		/// <summary>
 		/// Obtiene una order y sus detalles
 		/// </summary>
 		/// <param name="id">ID de la orden a obtener</param>
-		void Obtener(int id);
+		OrdenesResponse Obtener(int id);
 
 		/// <summary>
 		/// Listar las ordenes

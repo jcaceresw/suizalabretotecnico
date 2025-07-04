@@ -1,9 +1,10 @@
 ﻿using contracts.Validators;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel.DataAnnotations;
 
 namespace contracts.DTO
 {
-	public class OrdenDetallesDTO
+	public class OrdenDetallesRequest
 	{
 		public int Id { get; set; }
 		public int OrdenId { get; set; }
@@ -13,6 +14,7 @@ namespace contracts.DTO
 		public int Cantidad { get; set; }
 		[Precio]
 		public decimal PrecioUnitario { get; set; }
-		public decimal Subtotal { get; set; }
+		[BindNever]
+		public decimal Subtotal { get; set; } = 0;
 	}
 }
