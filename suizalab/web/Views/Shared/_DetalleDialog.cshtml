@@ -1,0 +1,24 @@
+﻿<div class="modal-content">
+	<div class="modal-body">
+		<form id="@(Model.Name)_form" autocomplete="off" method="post">
+			<input type="hidden" id="@(Model.Name)_id" name="@(Model.Name)_id" />
+			<div class="row">
+				<div class="col-sm-3 form-group">
+					<h6 class="kolo well-sm">Producto</h6>
+					<input type="input" class="form-input" id="@(Model.Name)_producto" name="@(Model.Name)_producto" />
+				</div>
+				<div class="col-sm-3 form-group">
+					<h6>Cantidad</h6>
+					<input type="input" class="form-input" id="@(Model.Name)_cantidad" name="@(Model.Name)_cantidad" />
+				</div>
+				<div class="col-sm-3 form-group">
+					<h6>Precio Unitario</h6>
+					<input type="input" class="form-input" id="@(Model.Name)_precio" name="@(Model.Name)_precio" />
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button class="button button-green-back" type="button" id="@(Model.Name)_btnGuardar">Guardar</button>
+	</div>
+</div>

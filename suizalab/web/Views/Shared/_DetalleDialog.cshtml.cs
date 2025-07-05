@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace web.Views.Shared
 {
-    public class _GridColumnSortHeaderModel : PageModel
+    public class _ModalDialogModel : PageModel
     {
         public void OnGet()
         {

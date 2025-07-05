@@ -27,7 +27,6 @@ namespace web.Controllers
 			// Search
 			List<OrdenesResponse> persons = null;
 
-			
 			if (!string.IsNullOrEmpty(searchEnd) && fechaInicio > fechaFin)
 			{
 				ViewBag.Error = "La fecha de Inicio no puede ser mayor a la fecha de Fin";
@@ -57,17 +56,34 @@ namespace web.Controllers
 			return View();
 		}
 
+		#region /* Methods used on Create View */
+
 		[HttpPost]
-		[Route("/create")]
-		public IActionResult Create([FromForm] OrdenesRequest orden)
+		public JsonResult Create(OrdenesRequest obj)
 		{
-			return View();
+			int response = _ordenesServicio.Crear(obj);
+
+			return Json(response);
 		}
+
+		#endregion
 
 		[Route("/edit/{id:int}")]
 		public IActionResult Edit(int id)
 		{
 			return View();
 		}
+
+		#region /* Methods used on Edit View */
+
+		[HttpPost]
+		public JsonResult Edit(OrdenesRequest obj)
+		{
+			int response = _ordenesServicio.Actualizar(obj);
+
+			return Json(response);
+		}
+
+		#endregion
 	}
 }

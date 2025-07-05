@@ -2,11 +2,39 @@
 	ViewBag.Title = "Crear Orden";
 }
 
-<form action="~/create" method="post">
-	<h3>Crear Orden</h3>
+@section Scripts
+{
+	<script type="text/javascript" src="~/crear.js" )"></script>
+}
 
-	<div>
-		<label class="form-label">Cliente</label>
-		<input type="text" class="form-input" />
-	</div>
-</form>
+<h3>Crear Orden</h3>
+
+<div>
+	<label class="form-label">Cliente</label>
+	<input class="form-input" id="form_cliente" name="form_cliente" type="text" />
+</div>
+
+<h3>Detalle</h3>
+<table class="table" id="form_detail" name="form_detail">
+	<thead>
+		<tr>
+			<th>Producto</th>
+			<th>Cantidad</th>
+			<th>Precio Unitario</th>
+			<th>Subtotal</th>
+			<th data-align="center" data-column-id="commands" data-formatter="commands" data-header-align="center" data-sortable="false" data-width="10%">Acciones</th>
+		</tr>
+	</thead>
+</table>
+
+<!-- DIALOGO DE CREACION/EDICION -->
+@await Html.PartialAsync("_DetalleDialog", new ModalDialog
+{
+	Name = "form_detalle",
+    Title = "Agregar detalle",
+    IsLarge = true
+})
+
+<div class="center mt">
+	<a href="~/"><i class="fa-solid fa-arrow-left"></i>&nbsp;Regresar</a>
+</div>
