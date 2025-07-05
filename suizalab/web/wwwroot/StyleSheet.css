@@ -344,6 +344,7 @@ a.link-hover:hover {
 
 .form-label {
 	display: inline-block;
+	margin-bottom: 0.25em;
 }
 
 @media screen and (min-width: 1000px) {
@@ -372,6 +373,16 @@ a{
 	text-decoration: none;
 }
 
+a.white{
+	color:white;
+}
+
 .center{
 	text-align: center;
+}
+
+.error {
+	text-align: center;
+	color:red;
+	padding: 0.25em;
 }

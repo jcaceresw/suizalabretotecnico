@@ -143,5 +143,50 @@ namespace tests
 			// Verificando que se obtuvo al menos una orden
 			Assert.NotNull(response);
 		}
+
+		[Fact]
+		public void Listar_SoloCliente()
+		{
+			List<OrdenesResponse> response = _ordenesServicio.Listar("sa", string.Empty, string.Empty);
+
+			// Verificando que la respuesta no esté vacía
+			Assert.NotEmpty(response);
+		}
+
+		[Fact]
+		public void Listar_SoloFechaInicio()
+		{
+			List<OrdenesResponse> response = _ordenesServicio.Listar(string.Empty, "2025-07-01", string.Empty);
+
+			// Verificando que la respuesta no esté vacía
+			Assert.NotEmpty(response);
+		}
+
+		[Fact]
+		public void Listar_SoloFechaFin()
+		{
+			List<OrdenesResponse> response = _ordenesServicio.Listar(string.Empty, string.Empty, "2025-07-03");
+
+			// Verificando que la respuesta no esté vacía
+			Assert.NotEmpty(response);
+		}
+
+		[Fact]
+		public void Listar_RangoFechas()
+		{
+			List<OrdenesResponse> response = _ordenesServicio.Listar(string.Empty, "2025-07-01", "2025-07-04");
+
+			// Verificando que la respuesta no esté vacía
+			Assert.NotEmpty(response);
+		}
+
+		[Fact]
+		public void Listar()
+		{
+			List<OrdenesResponse> response = _ordenesServicio.Listar("sa", "2025-07-01", "2025-07-04");
+
+			// Verificando que la respuesta no esté vacía
+			Assert.NotEmpty(response);
+		}
 	}
 }

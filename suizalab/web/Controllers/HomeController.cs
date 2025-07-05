@@ -16,24 +16,29 @@ namespace web.Controllers
 		[Route("/")]
 		public IActionResult Index(string? searchString, string? searchInit, string? searchEnd/*, string sortBy = nameof(OrdenesRequest.Cliente), SortOrderOptions sortOrder = SortOrderOptions.ASC*/)
 		{
-			ViewBag.SearchFields = new Dictionary<string, string>()
-			{
-				{ nameof(OrdenesResponse.Cliente), "Cliente" },
-				{ nameof(OrdenesResponse.FechaCreacion), "Fecha de Creación" }
-			};
-			
-			// Search
-			List<OrdenesResponse> persons = _ordenesServicio.Listar(searchString, searchInit, searchEnd);			
 			ViewBag.CurrentSearchString = searchString;
 			ViewBag.CurrentSearchInit = searchInit;
 			ViewBag.CurrentSearchEnd = searchEnd;
-			/*
-			// Sort
-			List<OrdenesResponse> sortedPersons = _ordenesServicio.GetSortedPersons(persons, sortBy, sortOrder);
-			ViewBag.CurrentSortBy = sortBy;
-			ViewBag.CurrentSortOrder = sortOrder;
+			ViewBag.Error = "";
+
+			DateTime fechaInicio = Convert.ToDateTime(searchInit);
+			DateTime fechaFin = Convert.ToDateTime(searchEnd);
+
+			// Search
+			List<OrdenesResponse> persons = null;
+
 			
-			return View(sortedPersons);*/
+			if (!string.IsNullOrEmpty(searchEnd) && fechaInicio > fechaFin)
+			{
+				ViewBag.Error = "La fecha de Inicio no puede ser mayor a la fecha de Fin";
+
+				persons = _ordenesServicio.Listar(searchString, string.Empty, string.Empty);
+			}
+			else
+			{
+				persons = _ordenesServicio.Listar(searchString, searchInit, searchEnd);
+			}
+
 			return View(persons);
 		}
 
@@ -45,8 +50,16 @@ namespace web.Controllers
 			return View(model);
 		}
 
+		[HttpGet]
 		[Route("/create")]
 		public IActionResult Create()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		[Route("/create")]
+		public IActionResult Create([FromForm] OrdenesRequest orden)
 		{
 			return View();
 		}

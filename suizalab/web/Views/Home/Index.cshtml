@@ -7,62 +7,55 @@
 <form action="~/" method="get">
 	<h1>Órdenes</h1>
 	<div class="box flex">
-		@* <div class="flex-1">
-			<select class="form-input" name="searchBy">
-				@foreach (var field in ViewBag.SearchFields)
-				{
-					if (@ViewBag.CurrentSearchBy == @field.Key)
-					{
-						<option value="@field.Key" selected="selected">@field.Value</option>
-					}
-					else
-					{
-						<option value="@field.Key">@field.Value</option>
-					}
-				}
-			</select>
-		</div> *@
 		<div class="flex-1">
-			<input type="search" id="Search" class="form-input" placeholder="Search" name="searchString" value="@ViewBag.CurrentSearchString" />
+			<label class="form-label">Búsqueda</label>
+			<input type="search" id="Search" class="form-input" placeholder="Cliente" name="searchString" value="@ViewBag.CurrentSearchString" />
 		</div>
 		<div class="flex-1">
-			<input type="date" name="searchInit" value="@ViewBag.CurrentSearchInit" />
+			<label class="form-label">Fecha de Inicio</label>
+			<input type="date" name="searchInit" value="@ViewBag.CurrentSearchInit" class="form-input" />
 		</div>
 		<div class="flex-1">
-			<input type="date" name="searchEnd" value="@ViewBag.CurrentSearchEnd" />
+			<label class="form-label">Fecha de Fin</label>
+			<input type="date" name="searchEnd" value="@ViewBag.CurrentSearchEnd" class="form-input" />
 		</div>
 		<div class="flex-1">
 			<button class="button button-blue-back"><i class="fa-solid fa-magnifying-glass"></i>&nbsp;Filtrar</button>
-			<a href="~/" class="button button-red-back"><i class="fa-solid fa-broom"></i>&nbsp;Limpiar</a>
-			<a href="~/create" class="button button-green-back"><i class="fa-solid fa-square-plus"></i>&nbsp;Crear</a>
+			<a href="~/" class="button button-red-back white"><i class="fa-solid fa-broom"></i>&nbsp;Limpiar</a>
+			<a href="~/create" class="button button-green-back white"><i class="fa-solid fa-square-plus"></i>&nbsp;Crear</a>
 		</div>
 	</div>
-	<table class="table w-100 mt">
-		<thead>
-			<tr>
-				@* @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "ColumnName", nameof(OrdenesResponse.Cliente) }, { "Cliente", "Cliente" } })
-				@await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "ColumnName", nameof(OrdenesResponse.FechaCreacion) }, { "FechaCreacion", "Fecha de Creación" } })
-				@await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "ColumnName", nameof(OrdenesResponse.Total) }, { "Total", "Total" } }) *@
-				<th>Cliente</th>
-				<th>Fecha de Creación</th>
-				<th>Total</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (OrdenesResponse orden in Model)
-			{
+	@if (!string.IsNullOrEmpty(ViewBag.Error))
+	{
+		<div class="error">@ViewBag.Error</div>
+	}
+
+	@if (Model.Count() > 0)
+	{
+		<table class="table w-100 mt">
+			<thead>
 				<tr>
-					<td>@orden.Cliente</td>
-					<td>@orden.FechaCreacion.ToString("dd MMM yyyy")</td>
-					<td>@orden.Total</td>
-					<td>
-						<a href="~/details/@orden.Id" class="fa-solid fa-magnifying-glass"></a>
-						&nbsp;
-						<a href="~/edit/@orden.Id" class="fas fa-edit"></a>
-					</td>
+					<th>Cliente</th>
+					<th>Fecha de Creación</th>
+					<th>Total</th>
+					<th></th>
 				</tr>
-			}
-		</tbody>
-	</table>
+			</thead>
+			<tbody>
+				@foreach (OrdenesResponse orden in Model)
+				{
+					<tr>
+						<td>@orden.Cliente</td>
+						<td>@orden.FechaCreacion.ToString("dd MMM yyyy")</td>
+						<td>@orden.Total</td>
+						<td>
+							<a href="~/details/@orden.Id" class="fa-solid fa-magnifying-glass"></a>
+							&nbsp;
+							<a href="~/edit/@orden.Id" class="fas fa-edit"></a>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	}
 </form>

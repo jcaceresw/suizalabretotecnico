@@ -66,24 +66,21 @@ namespace services
 
 			if (tablas != null && tablas.Tables.Count == 1)
 			{
-				if (tablas.Tables[0].Rows.Count > 0)
+				List<OrdenesResponse> collection = new List<OrdenesResponse>();
+
+				foreach (DataRow row in tablas.Tables[0].Rows)
 				{
-					List<OrdenesResponse> collection = new List<OrdenesResponse>();
+					OrdenesResponse orden = new OrdenesResponse();
 
-					foreach (DataRow row in tablas.Tables[0].Rows)
-					{
-						OrdenesResponse orden = new OrdenesResponse();
+					orden.Id = Convert.ToInt32(row["Id"]);
+					orden.Cliente = row["Cliente"].ToString();
+					orden.FechaCreacion = Convert.ToDateTime(row["FechaCreacion"]);
+					orden.Total = Convert.ToDecimal(row["Total"]);
 
-						orden.Id = Convert.ToInt32(row["Id"]);
-						orden.Cliente = row["Cliente"].ToString();
-						orden.FechaCreacion = Convert.ToDateTime(row["FechaCreacion"]);
-						orden.Total = Convert.ToDecimal(row["Total"]);
-
-						collection.Add(orden);
-					}
-
-					return collection;
+					collection.Add(orden);
 				}
+
+				return collection;
 			}
 
 			return null;
