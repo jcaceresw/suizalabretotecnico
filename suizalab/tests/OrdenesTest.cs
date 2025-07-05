@@ -90,15 +90,31 @@ namespace tests
 				new OrdenDetallesRequest() { Producto = "Correa", Cantidad = 3, PrecioUnitario = 10.50M }
 			};
 
+			// Verificando que más de un registro fue afectado
 			int response = _ordenesServicio.Crear(request);
 
 			Assert.True(response > 0);
 		}
 
 		[Fact]
-		public void Editar()
+		public void Actualizar()
 		{
+			OrdenesRequest request = new OrdenesRequest();
+			request.Id = 2;
+			request.Cliente = "Saga Falabella";
 
+			request.Detalles = new List<OrdenDetallesRequest>()
+			{
+				new OrdenDetallesRequest() { Id = 4, Producto = "Polos", Cantidad = 15, PrecioUnitario = 7.50M },
+				new OrdenDetallesRequest() { Id = 5, Producto = "Blusas", Cantidad = 11, PrecioUnitario = 3M },
+				new OrdenDetallesRequest() { Id = 6, Producto = "Corbatas", Cantidad = 15, PrecioUnitario = 1.50M },
+				new OrdenDetallesRequest() { Id = 7, Producto = "Correas", Cantidad = 13, PrecioUnitario = 1.50M }
+			};
+
+			int response = _ordenesServicio.Actualizar(request);
+
+			// Verificando que más de un registro fue afectado
+			Assert.True(response > 0);
 		}
 
 		[Fact]
@@ -111,23 +127,21 @@ namespace tests
 		}
 
 		[Fact]
-		public void Actualizar()
-		{
-			OrdenesRequest request = new OrdenesRequest();
-
-			//int response = _ordenesServicio.Actualizar();
-
-			// Verificando que más de un registro fue afectado
-			//Assert.True(response > 0);
-		}
-
-		[Fact]
 		public void Eliminar()
 		{
 			int response = _ordenesServicio.Eliminar(1);
 
 			// Verificando que más de un registro fue eliminado
 			Assert.True(response > 0);
+		}
+
+		[Fact]
+		public void Listar_SinFiltros()
+		{
+			List<OrdenesResponse> response = _ordenesServicio.Listar(string.Empty, string.Empty, string.Empty);
+
+			// Verificando que se obtuvo al menos una orden
+			Assert.NotNull(response);
 		}
 	}
 }

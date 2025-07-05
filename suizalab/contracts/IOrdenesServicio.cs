@@ -34,6 +34,6 @@ namespace contracts
 		/// <param name="nombreCliente">Filtro opcional por nombre del cliente</param>
 		/// <param name="fechaInicio">Filtro opcional por fecha de creación (rango inicial)</param>
 		/// <param name="fechaFin">Filtro opcional por fecha de creación (rango final)</param>
-		void Listar(string? nombreCliente, string? fechaInicio, string? fechaFin);
+		List<OrdenesResponse> Listar(string? nombreCliente, string? fechaInicio, string? fechaFin);
 	}
 }

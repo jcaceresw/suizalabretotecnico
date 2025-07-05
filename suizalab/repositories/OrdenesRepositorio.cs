@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using contracts.DTO;
+﻿using contracts.DTO;
 using Microsoft.Data.SqlClient;
 using repositories.ADO;
 using System.Data;
@@ -48,26 +47,21 @@ namespace repositories
 				cmd.Parameters.AddWithValue("@CLIE", request.Cliente);
 				cmd.Parameters.AddWithValue("@TOTA", request.Total);
 
-				int orderId = ExecNonQueryTransactionalWithOutput("SP_CREAR_ORDEN", cmd, "ORID");
+				int response = ExecuteNonQuery("SP_ACTUALIZAR_ORDEN", cmd);
 
-				if (orderId > 0)
+				foreach (OrdenDetallesRequest detalle in request.Detalles)
 				{
-					int response = 0;
+					cmd.Parameters.Clear();
+					cmd.Parameters.AddWithValue("@DEID", detalle.Id);
+					cmd.Parameters.AddWithValue("@PROD", detalle.Producto);
+					cmd.Parameters.AddWithValue("@CANT", detalle.Cantidad);
+					cmd.Parameters.AddWithValue("@PUNI", detalle.PrecioUnitario);
+					cmd.Parameters.AddWithValue("@SUBT", detalle.Subtotal);
 
-					foreach (OrdenDetallesRequest detalle in request.Detalles)
-					{
-						cmd.Parameters.Clear();
-						cmd.Parameters.AddWithValue("@ORID", orderId);
-						cmd.Parameters.AddWithValue("@PROD", detalle.Producto);
-						cmd.Parameters.AddWithValue("@CANT", detalle.Cantidad);
-						cmd.Parameters.AddWithValue("@PUNI", detalle.PrecioUnitario);
-						cmd.Parameters.AddWithValue("@SUBT", detalle.Subtotal);
-
-						response = ExecuteNonQuery("SP_CREAR_ORDEN_DETALLE", cmd);
-					}
-
-					return response;
+					response = ExecuteNonQuery("SP_ACTUALIZAR_ORDEN_DETALLE", cmd);
 				}
+
+				return response;
 			}
 
 			return 0;
@@ -105,6 +99,28 @@ namespace repositories
 			}
 
 			return response;
+		}
+
+		public DataSet Listar(string? nombreCliente, string? fechaInicio, string? fechaFin)
+		{
+			using (SqlCommand cmd = new SqlCommand())
+			{
+				cmd.Parameters.AddWithValue("@CLIE", nombreCliente);
+				cmd.Parameters.AddWithValue("@FINI", fechaInicio);
+				cmd.Parameters.AddWithValue("@FFIN", fechaFin);
+
+				cmd.CommandText = "SP_LISTAR_ORDENES";
+				cmd.CommandType = CommandType.StoredProcedure;
+
+				DataSet ds = ExecuteNonQueryDataSet(cmd);
+
+				if (ds.Tables.Count > 0)
+				{
+					return ds;
+				}
+			}
+
+			return null;
 		}
 	}
 }

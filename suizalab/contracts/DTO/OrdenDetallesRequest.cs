@@ -7,7 +7,6 @@ namespace contracts.DTO
 	public class OrdenDetallesRequest
 	{
 		public int Id { get; set; }
-		public int OrdenId { get; set; }
 		[Required(ErrorMessage = "Producto no puede estar vacío")]
 		public string Producto { get; set; }
 		[Cantidad]

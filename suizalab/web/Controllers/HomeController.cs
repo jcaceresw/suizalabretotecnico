@@ -1,6 +1,5 @@
 ﻿using contracts;
 using contracts.DTO;
-using contracts.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace web.Controllers
@@ -15,29 +14,30 @@ namespace web.Controllers
 		}
 
 		[Route("/")]
-		public IActionResult Index(string searchBy, string? searchString, string sortBy = nameof(OrdenesRequest.Cliente), SortOrderOptions sortOrder = SortOrderOptions.ASC)
+		public IActionResult Index(string? searchString, string? searchInit, string? searchEnd/*, string sortBy = nameof(OrdenesRequest.Cliente), SortOrderOptions sortOrder = SortOrderOptions.ASC*/)
 		{
 			ViewBag.SearchFields = new Dictionary<string, string>()
 			{
 				{ nameof(OrdenesResponse.Cliente), "Cliente" },
 				{ nameof(OrdenesResponse.FechaCreacion), "Fecha de Creación" }
 			};
-			/*
+			
 			// Search
-			List<PersonResponse> persons = _ordenesServicio.GetFilteredPersons(searchBy, searchString);
-			ViewBag.CurrentSearchBy = searchBy;
+			List<OrdenesResponse> persons = _ordenesServicio.Listar(searchString, searchInit, searchEnd);			
 			ViewBag.CurrentSearchString = searchString;
-
+			ViewBag.CurrentSearchInit = searchInit;
+			ViewBag.CurrentSearchEnd = searchEnd;
+			/*
 			// Sort
-			List<PersonResponse> sortedPersons = _ordenesServicio.GetSortedPersons(persons, sortBy, sortOrder);
+			List<OrdenesResponse> sortedPersons = _ordenesServicio.GetSortedPersons(persons, sortBy, sortOrder);
 			ViewBag.CurrentSortBy = sortBy;
 			ViewBag.CurrentSortOrder = sortOrder;
 			
 			return View(sortedPersons);*/
-			return View();
+			return View(persons);
 		}
 
-		[Route("/order/{id:int}")]
+		[Route("/details/{id:int}")]
 		public IActionResult Details(int id)
 		{
 			OrdenesResponse model = _ordenesServicio.Obtener(id);
@@ -45,5 +45,16 @@ namespace web.Controllers
 			return View(model);
 		}
 
+		[Route("/create")]
+		public IActionResult Create()
+		{
+			return View();
+		}
+
+		[Route("/edit/{id:int}")]
+		public IActionResult Edit(int id)
+		{
+			return View();
+		}
 	}
 }

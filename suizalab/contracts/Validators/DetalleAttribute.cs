@@ -3,22 +3,31 @@ using System.ComponentModel.DataAnnotations;
 
 namespace contracts.Validators
 {
-	public class DetalleAttribute: ValidationAttribute
+	public class DetalleAttribute : ValidationAttribute
 	{
-		public string DefaultErrorMessage { get; set; } = "Lista de detalle no debe estar vacía";
+		public string DefaultErrorMessage { get; set; } = "Lista de Detalles debe contener al menos un registro";
 
 		public DetalleAttribute()
 		{
 		}
 
 		protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
-		{
+		{ 
+			// Objeto vacío
 			if (value is null)
 			{
 				throw new ArgumentException(DefaultErrorMessage);
 			}
 
-			foreach (OrdenDetallesRequest request in (List<OrdenDetallesRequest>)value)
+			// Objeto sin detalles
+			List<OrdenDetallesRequest> detalles = (List<OrdenDetallesRequest>)value;
+
+			if (detalles.Count < 1)
+			{
+				throw new ArgumentException(DefaultErrorMessage);
+			}
+
+			foreach (OrdenDetallesRequest request in detalles)
 			{
 				ValidationContext modelContext = new(request);
 				List<ValidationResult> validationResults = [];

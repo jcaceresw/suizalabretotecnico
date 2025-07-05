@@ -60,9 +60,33 @@ namespace services
 			return _repositorio.Eliminar(id);
 		}
 
-		public void Listar(string? nombreCliente, string? fechaInicio, string? fechaFin)
+		public List<OrdenesResponse> Listar(string? nombreCliente, string? fechaInicio, string? fechaFin)
 		{
-			throw new NotImplementedException();
+			DataSet tablas = _repositorio.Listar(nombreCliente, fechaInicio, fechaFin);
+
+			if (tablas != null && tablas.Tables.Count == 1)
+			{
+				if (tablas.Tables[0].Rows.Count > 0)
+				{
+					List<OrdenesResponse> collection = new List<OrdenesResponse>();
+
+					foreach (DataRow row in tablas.Tables[0].Rows)
+					{
+						OrdenesResponse orden = new OrdenesResponse();
+
+						orden.Id = Convert.ToInt32(row["Id"]);
+						orden.Cliente = row["Cliente"].ToString();
+						orden.FechaCreacion = Convert.ToDateTime(row["FechaCreacion"]);
+						orden.Total = Convert.ToDecimal(row["Total"]);
+
+						collection.Add(orden);
+					}
+
+					return collection;
+				}
+			}
+
+			return null;
 		}
 
 		public OrdenesResponse Obtener(int id)

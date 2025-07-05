@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<OrdenesResponse>
 
 @{
-	ViewBag.Title = "Ordenes";
+	ViewBag.Title = "Órdenes";
 }
 
 <form action="~/" method="get">
-	<h1>Persons</h1>
+	<h1>Órdenes</h1>
 	<div class="box flex">
-		<div class="flex-1">
+		@* <div class="flex-1">
 			<select class="form-input" name="searchBy">
 				@foreach (var field in ViewBag.SearchFields)
 				{
@@ -21,42 +21,48 @@
 					}
 				}
 			</select>
-		</div>
+		</div> *@
 		<div class="flex-1">
 			<input type="search" id="Search" class="form-input" placeholder="Search" name="searchString" value="@ViewBag.CurrentSearchString" />
 		</div>
 		<div class="flex-1">
-			<button class="button button-blue-back">Search</button>
-			<a href="~/persons/index" class="link-hover">Limpiar</a>
+			<input type="date" name="searchInit" value="@ViewBag.CurrentSearchInit" />
+		</div>
+		<div class="flex-1">
+			<input type="date" name="searchEnd" value="@ViewBag.CurrentSearchEnd" />
+		</div>
+		<div class="flex-1">
+			<button class="button button-blue-back"><i class="fa-solid fa-magnifying-glass"></i>&nbsp;Filtrar</button>
+			<a href="~/" class="button button-red-back"><i class="fa-solid fa-broom"></i>&nbsp;Limpiar</a>
+			<a href="~/create" class="button button-green-back"><i class="fa-solid fa-square-plus"></i>&nbsp;Crear</a>
 		</div>
 	</div>
 	<table class="table w-100 mt">
 		<thead>
 			<tr>
-				@* @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "ColumnName", nameof(PersonResponse.PersonName) }, { "DisplayName", "Person Name" } })
-				@await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "ColumnName", nameof(PersonResponse.Email) }, { "DisplayName", "Email" } })
-				@await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "ColumnName", nameof(PersonResponse.DateOfBirth) }, { "DisplayName", "Date of Birth" } })
-				@await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "ColumnName", nameof(PersonResponse.Age) }, { "DisplayName", "Age" } })
-				@await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "ColumnName", nameof(PersonResponse.Gender) }, { "DisplayName", "Gender" } })
-				@await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "ColumnName", nameof(PersonResponse.Country) }, { "DisplayName", "Country" } })
-				@await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "ColumnName", nameof(PersonResponse.Address) }, { "DisplayName", "Address" } })
-				@await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "ColumnName", nameof(PersonResponse.ReceiceNewsLetters) }, { "DisplayName", "Receive News Letters" } }) *@
+				@* @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "ColumnName", nameof(OrdenesResponse.Cliente) }, { "Cliente", "Cliente" } })
+				@await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "ColumnName", nameof(OrdenesResponse.FechaCreacion) }, { "FechaCreacion", "Fecha de Creación" } })
+				@await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "ColumnName", nameof(OrdenesResponse.Total) }, { "Total", "Total" } }) *@
+				<th>Cliente</th>
+				<th>Fecha de Creación</th>
+				<th>Total</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
-		@* 	@foreach (OrdenesResponse orden in Model)
-			{ *@
-				@* <tr>
-					<td>@orden.PersonName</td>
-					<td>@orden.Email</td>
-					<td>@orden.DateOfBirth?.ToString("dd MMM yyyy")</td>
-					<td>@orden.Age</td>
-					<td>@orden.Gender</td>
-					<td>@orden.Country</td>
-					<td>@orden.Address</td>
-					<td>@orden.ReceiceNewsLetters</td>
-				</tr> *@
-		@* 	} *@
+			@foreach (OrdenesResponse orden in Model)
+			{
+				<tr>
+					<td>@orden.Cliente</td>
+					<td>@orden.FechaCreacion.ToString("dd MMM yyyy")</td>
+					<td>@orden.Total</td>
+					<td>
+						<a href="~/details/@orden.Id" class="fa-solid fa-magnifying-glass"></a>
+						&nbsp;
+						<a href="~/edit/@orden.Id" class="fas fa-edit"></a>
+					</td>
+				</tr>
+			}
 		</tbody>
 	</table>
 </form>
